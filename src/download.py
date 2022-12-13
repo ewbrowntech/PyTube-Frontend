@@ -10,14 +10,14 @@ Download the video and/or audio streams of a YouTube video
 '''
 
 # Download audio
-def download_audio(streams, title, downloadsFolderPath):
+def download_audio(streams, isTemp, downloadsFolderPath):
     audioStreams = streams.filter(only_audio=True)
     preferredStream = audioStreams.order_by("abr").last()  # Get stream with highest audio bitrate
     filetype = preferredStream.mime_type.split("/")[1]     # Get the filetype of that stream
-    if title == None:
+    if isTemp:
         filename = "audio" + "." + filetype
     else:
-        filename = title + "." + filetype
+        filename = "YouTube-Audio." + filetype
     filepath = os.path.join(downloadsFolderPath, filename)
 
     preferredStream.download(downloadsFolderPath, filename=filename)
